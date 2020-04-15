@@ -18,6 +18,13 @@ class LoginRepository(
         user = localDataSource.user
     }
 
+    fun logOut() {
+        user = null
+
+        localDataSource.logout()
+        remoteDataSource.logout()
+    }
+
     suspend fun login(email: String, password: String): Result<UserInfoResponse> {
         val result = remoteDataSource.login(email, password)
 
@@ -32,10 +39,23 @@ class LoginRepository(
         localDataSource.user = user
     }
 
-    fun logOut() {
-        user = null
+    companion object {
 
-        localDataSource.logout()
-        remoteDataSource.logout()
+        @Volatile
+        private var INSTANCE: LoginRepository? = null
+
+        fun getInstance(
+            loginLocalDataSource: LoginLocalDataSource,
+            remoteDataSource: LoginRemoteDataSource
+        ): LoginRepository {
+            return INSTANCE ?: synchronized(this) {
+                INSTANCE ?: LoginRepository(
+                    loginLocalDataSource,
+                    remoteDataSource
+                ).also {
+                    INSTANCE = it
+                }
+            }
+        }
     }
 }

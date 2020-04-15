@@ -23,13 +23,26 @@ class LoginRemoteDataSource(
             val body = response.body()
             if (body != null) {
                 val token = body.accessToken
-                TODO("requestUser")
+                //TODO 解析Token
+                tokenLocalDataSource.authToken = token
+                return requestUser()
             }
         }
         return Result.Error(IOException("Access token retrieval failed ${response.code()} ${response.message()}"))
     }
 
-    fun logout() {
+    private suspend fun requestUser(): Result<UserInfoResponse> {
+        val response = service.getUserInfo()
+        if (response.isSuccessful) {
+            val user = response.body()
+            if (user != null) {
+                return Result.Success(user)
+            }
+        }
+        return Result.Error(IOException("Failed to get user info ${response.code()} ${response.message()}"))
+    }
 
+    fun logout() {
+        tokenLocalDataSource.authToken = null
     }
 }

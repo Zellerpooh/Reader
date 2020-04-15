@@ -11,7 +11,7 @@ interface InoreaderService {
 
 
     @GET("reader/api/0/user-info")
-    fun getUserInfo():Response<List<UserInfoResponse>>
+    fun getUserInfo():Response<UserInfoResponse>
 
     @POST("accounts/ClientLogin")
     fun clientLogin(@Query("Email") email: String, @Query("Passwd") password: String): Response<AccessToken>
