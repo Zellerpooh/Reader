@@ -1,12 +1,14 @@
-package com.zeller.reader.login
+package com.zeller.reader.login.ui
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
 import com.zeller.reader.R
 import com.zeller.reader.databinding.ActivityLoginBinding
+import com.zeller.reader.login.AccountManager
 
 class LoginActivity() : AppCompatActivity() {
 
@@ -21,6 +23,7 @@ class LoginActivity() : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
         binding.signInButton.setOnClickListener { doLogin() }
+
     }
 
     fun doLogin() {

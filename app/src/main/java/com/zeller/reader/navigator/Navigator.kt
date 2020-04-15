@@ -2,7 +2,7 @@ package com.zeller.reader.navigator
 
 import android.content.Context
 import com.zeller.reader.login.AccountManager
-import com.zeller.reader.login.LoginActivity
+import com.zeller.reader.login.ui.LoginActivity
 import com.zeller.reader.ui.activities.MainActivity
 
 class Navigator() {
