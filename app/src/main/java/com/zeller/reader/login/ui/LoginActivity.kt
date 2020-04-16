@@ -5,14 +5,19 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import com.zeller.reader.R
+import com.zeller.reader.ReaderApp
 import com.zeller.reader.databinding.ActivityLoginBinding
-import com.zeller.reader.login.AccountManager
+import org.jetbrains.anko.toast
+import javax.inject.Inject
 
 class LoginActivity() : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+
+    @Inject
+    lateinit var viewModel: LoginViewModel
 
     companion object {
         fun callingIntent(context: Context) = Intent(context, LoginActivity::class.java)
@@ -20,17 +25,23 @@ class LoginActivity() : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        (applicationContext as ReaderApp).appComponent.inject(this)
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
         binding.signInButton.setOnClickListener { doLogin() }
 
+        binding.lifecycleOwner = this
+
+        viewModel.user.observe(this, Observer {
+            toast(it.toString())
+        })
+
     }
 
     fun doLogin() {
-        AccountManager.login(
-            binding.username.text.toString().trim(),
-            binding.password.text.toString().trim()
-        )
+        viewModel.login(binding.username.toString().trim(), binding.password.toString().trim())
     }
 
 }

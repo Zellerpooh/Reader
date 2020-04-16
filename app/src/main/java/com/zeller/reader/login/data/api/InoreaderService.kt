@@ -9,7 +9,6 @@ import retrofit2.http.Query
 
 interface InoreaderService {
 
-
     @GET("reader/api/0/user-info")
     fun getUserInfo():Response<UserInfoResponse>
 
@@ -18,5 +17,8 @@ interface InoreaderService {
 
     companion object {
         const val ENDPOINT = "https://www.inoreader.com/"
+
+        const val INO_APP_ID = "999999683"
+        const val INO_APP_KEY = "S6eiPILJRCcdZMAEemBAzYWqK9zJljN1"
     }
 }

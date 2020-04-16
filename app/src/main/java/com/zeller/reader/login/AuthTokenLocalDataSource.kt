@@ -20,7 +20,6 @@ class AuthTokenLocalDataSource(val prefs: SharedPreferences) {
         }
     }
 
-
     companion object {
         const val INO_READER_AUTH_PREF = "INO_READER_AUTH_PREF"
 

@@ -2,9 +2,7 @@ package com.zeller.reader.login.data
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.google.gson.annotations.SerializedName
 import com.zeller.reader.login.data.model.UserInfoResponse
-import com.zeller.reader.utils.pref
 import javax.inject.Inject
 
 class LoginLocalDataSource @Inject constructor(private val prefs: SharedPreferences) {

@@ -2,7 +2,6 @@ package com.zeller.reader.navigator
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.zeller.reader.login.AccountManager
 
 class RouteActivity : AppCompatActivity() {
 

@@ -6,8 +6,9 @@ import com.zeller.reader.data.Result
 import com.zeller.reader.login.AuthTokenLocalDataSource
 import com.zeller.reader.login.data.api.InoreaderService
 import com.zeller.reader.login.data.model.UserInfoResponse
+import javax.inject.Inject
 
-class LoginRemoteDataSource(
+class LoginRemoteDataSource @Inject constructor(
     private val tokenLocalDataSource: AuthTokenLocalDataSource,
     val service: InoreaderService
 ) {
