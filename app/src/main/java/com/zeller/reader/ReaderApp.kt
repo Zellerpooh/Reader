@@ -6,6 +6,8 @@ import androidx.multidex.MultiDex
 import com.zeller.reader.dagger.AppComponent
 import com.zeller.reader.dagger.ApplicationModule
 import com.zeller.reader.dagger.DaggerAppComponent
+import com.zeller.reader.dagger.SharedPreferenceModule
+import com.zeller.reader.login.data.LoginLocalDataSource
 
 class ReaderApp : Application() {
 
@@ -13,10 +15,9 @@ class ReaderApp : Application() {
         initializeComponent()
     }
 
-    open fun initializeComponent(): AppComponent {
-        return DaggerAppComponent.factory()
-//            .applicationModule(ApplicationModule(this, "INO_READER_PREFS"))
-            .create(applicationContext)
+    private fun initializeComponent(): AppComponent {
+        return DaggerAppComponent.factory().create(this)
+
     }
 
     override fun onCreate() {

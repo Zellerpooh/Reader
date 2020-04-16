@@ -9,15 +9,13 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-    modules = [ApplicationModule::class, InoReaderDataModule::class]
+    modules = [ApplicationModule::class, InoReaderDataModule::class, SharedPreferenceModule::class]
 )
 interface AppComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(@BindsInstance application: Context): AppComponent
-
-//        fun applicationModule(module: ApplicationModule): Factory
+        fun create(@BindsInstance context: Context): AppComponent
     }
 
     fun inject(loginActivity: LoginActivity)

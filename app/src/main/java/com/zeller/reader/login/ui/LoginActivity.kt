@@ -3,6 +3,7 @@ package com.zeller.reader.login.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -34,6 +35,9 @@ class LoginActivity() : AppCompatActivity() {
 
         binding.lifecycleOwner = this
 
+        binding.username.setText("zellerpooh@gmail.com")
+        binding.password.setText("Wei1ai.neymar")
+
         viewModel.user.observe(this, Observer {
             toast(it.toString())
         })
@@ -41,6 +45,8 @@ class LoginActivity() : AppCompatActivity() {
     }
 
     fun doLogin() {
+        toast("startLogin")
+        println("startLogin")
         viewModel.login(binding.username.toString().trim(), binding.password.toString().trim())
     }
 

@@ -1,5 +1,6 @@
 package com.zeller.reader.login.data
 
+import android.util.Log
 import com.zeller.reader.utils.safeApiCall
 import java.io.IOException
 import com.zeller.reader.data.Result
@@ -13,6 +14,7 @@ class LoginRemoteDataSource @Inject constructor(
     val service: InoreaderService
 ) {
 
+
     suspend fun login(email: String, password: String) = safeApiCall(
         call = { requestLogin(email, password) },
         errorMessage = "Error logging in"
@@ -24,8 +26,9 @@ class LoginRemoteDataSource @Inject constructor(
             val body = response.body()
             if (body != null) {
                 val token = body.accessToken
-                //TODO 解析Token
-                tokenLocalDataSource.authToken = token
+                val realToken = token.substring(token.indexOf("=") + 1)
+                Log.d("LoginRemoteDataSource", realToken)
+                tokenLocalDataSource.authToken = realToken
                 return requestUser()
             }
         }
