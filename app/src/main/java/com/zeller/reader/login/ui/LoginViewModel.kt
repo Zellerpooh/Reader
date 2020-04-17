@@ -1,6 +1,5 @@
 package com.zeller.reader.login.ui
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.zeller.reader.data.Result
@@ -11,7 +10,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.ln
 
 class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository) :
     ViewModel() {

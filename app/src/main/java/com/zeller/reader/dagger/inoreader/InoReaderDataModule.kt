@@ -1,6 +1,8 @@
 package com.zeller.reader.dagger.inoreader
 
+import android.content.Context
 import android.content.SharedPreferences
+import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.zeller.reader.BuildConfig
 import com.zeller.reader.login.AuthTokenLocalDataSource
@@ -10,6 +12,8 @@ import com.zeller.reader.login.data.LoginRemoteDataSource
 import com.zeller.reader.login.data.LoginRepository
 import com.zeller.reader.login.data.api.ClientAuthInterceptor
 import com.zeller.reader.login.data.api.InoreaderService
+import com.zeller.reader.login.ui.LoginViewModel
+import com.zeller.reader.login.ui.LoginViewModelFactory
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
