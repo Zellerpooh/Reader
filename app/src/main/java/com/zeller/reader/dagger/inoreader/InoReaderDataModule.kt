@@ -1,20 +1,15 @@
 package com.zeller.reader.dagger.inoreader
 
-import android.content.Context
 import android.content.SharedPreferences
-import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.zeller.reader.BuildConfig
 import com.zeller.reader.login.AuthTokenLocalDataSource
-import com.zeller.reader.login.AuthTokenLocalDataSource.Companion
 import com.zeller.reader.login.data.LoginLocalDataSource
 import com.zeller.reader.login.data.LoginRemoteDataSource
 import com.zeller.reader.login.data.LoginRepository
 import com.zeller.reader.login.data.api.ClientAuthInterceptor
 import com.zeller.reader.login.data.api.InoreaderService
-import com.zeller.reader.login.ui.LoginViewModel
-import com.zeller.reader.login.ui.LoginViewModelFactory
-import dagger.Lazy
+import com.zeller.reader.network.StringConverterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -47,25 +42,23 @@ class InoReaderDataModule {
         }
 
     @Provides
-    fun provideOkHttpClient(
+    fun provideInoReaderService(
         interceptor: HttpLoggingInterceptor,
-        tokenHolder: AuthTokenLocalDataSource
-    ): OkHttpClient {
-        return OkHttpClient.Builder().addInterceptor(interceptor).addInterceptor(
-            ClientAuthInterceptor(
-                tokenHolder,
-                InoreaderService.INO_APP_ID,
-                InoreaderService.INO_APP_KEY
-            )
-        ).build()
-    }
-
-    @Provides
-    fun provideInoReaderService(okHttpClient: Lazy<OkHttpClient>, gson: Gson): InoreaderService {
+        tokenHolder: AuthTokenLocalDataSource, gson: Gson
+    ): InoreaderService {
         return Retrofit.Builder()
             .baseUrl(InoreaderService.ENDPOINT)
-            .callFactory(okHttpClient.get())
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .callFactory(
+                OkHttpClient.Builder().addInterceptor(interceptor).addInterceptor(
+                    ClientAuthInterceptor(
+                        tokenHolder,
+                        InoreaderService.INO_APP_ID,
+                        InoreaderService.INO_APP_KEY
+                    )
+                ).build()
+            )
+            .addConverterFactory(StringConverterFactory())
+//            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(InoreaderService::class.java)
     }

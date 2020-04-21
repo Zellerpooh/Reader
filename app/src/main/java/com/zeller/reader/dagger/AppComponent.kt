@@ -1,5 +1,6 @@
 package com.zeller.reader.dagger
 
+import android.app.Application
 import android.content.Context
 import com.zeller.reader.dagger.inoreader.InoReaderDataModule
 import com.zeller.reader.login.ui.LoginActivity
@@ -13,10 +14,7 @@ import javax.inject.Singleton
 )
 interface AppComponent {
 
-    @Component.Factory
-    interface Factory {
-        fun create(@BindsInstance context: Context): AppComponent
-    }
+    fun inject(application: Application)
 
     fun inject(loginActivity: LoginActivity)
 

@@ -7,6 +7,8 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.zeller.reader.R
 import com.zeller.reader.ReaderApp
 import com.zeller.reader.databinding.ActivityLoginBinding
@@ -17,8 +19,10 @@ class LoginActivity() : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
 
-    @Inject
     lateinit var viewModel: LoginViewModel
+
+    @Inject
+    lateinit var viewModelFactory: LoginViewModelFactory
 
     companion object {
         fun callingIntent(context: Context) = Intent(context, LoginActivity::class.java)
@@ -38,6 +42,9 @@ class LoginActivity() : AppCompatActivity() {
         binding.username.setText("zellerpooh@gmail.com")
         binding.password.setText("Wei1ai.neymar")
 
+        viewModel = ViewModelProvider(this, viewModelFactory)
+            .get(LoginViewModel::class.java)
+
         viewModel.user.observe(this, Observer {
             toast(it.toString())
         })
@@ -47,7 +54,10 @@ class LoginActivity() : AppCompatActivity() {
     fun doLogin() {
         toast("startLogin")
         println("startLogin")
-        viewModel.login(binding.username.toString().trim(), binding.password.toString().trim())
+        viewModel.login(
+            binding.username.text.toString().trim(),
+            binding.password.text.toString().trim()
+        )
     }
 
 }

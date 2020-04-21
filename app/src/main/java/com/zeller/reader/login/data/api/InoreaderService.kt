@@ -1,7 +1,7 @@
 package com.zeller.reader.login.data.api
 
-import com.zeller.reader.login.data.model.AccessToken
 import com.zeller.reader.login.data.model.UserInfoResponse
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -13,7 +13,7 @@ interface InoreaderService {
     fun getUserInfo():Response<UserInfoResponse>
 
     @POST("accounts/ClientLogin")
-    fun clientLogin(@Query("Email") email: String, @Query("Passwd") password: String): Response<AccessToken>
+    fun clientLogin(@Query("Email") email: String, @Query("Passwd") password: String): Call<String>
 
     companion object {
         const val ENDPOINT = "https://www.inoreader.com/"
